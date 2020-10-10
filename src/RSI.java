@@ -70,8 +70,10 @@ public class RSI {
                 if (decreases > 0) {
                     RS = increases/decreases;
                 }
-
-                RSIValue = 100 - (100 / (1 + RS));
+                
+                if (RS != -1) {
+                    RSIValue = 100 - (100 / (1 + RS));
+                }
 
                 System.out.println("RSI: " + RSIValue);
 
