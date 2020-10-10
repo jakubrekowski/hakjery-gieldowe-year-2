@@ -1,22 +1,7 @@
 # Hakjery Giełdowe
 
 ## Dokumentacja
+Pełna na dany moment, aktualizowana systematycznie dokumentacja znajduje sie na [Wiki](https://github.com/jakubrekowski/hakjery-gieldowe-year-2/wiki).
 
-### RSI
-Klasa zwraca agenta RSI.
-
-#### runRSI(isin) 
-Zwraca odpowiedź agenta RSI spółki, której numer isin jest przekazany w argumencie.
-```isin``` jest typu string.
-
-Zwraca:
-- ``-1`` Sprzedaj
-- ``0`` Wstrzymaj się
-- ``1`` Kup
-
-### ReadData 
-Klasa zwraca dane dla danej spółki.
-
-#### getQuotation(isin)
-Zwraca cenę akcji spółki na podstawie numeru isin przedsiębiorstwa.
-```isin``` jest typu string.
+## Licencja
+[The Unlicense](https://unlicense.org/)
