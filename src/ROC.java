@@ -1,14 +1,15 @@
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RSI {
+public class ROC {
     int numberOfHistoricalSessions = 14;
     int seconds = 5;
     int decision = 0;
 
     double[] vecQuotation = new double[numberOfHistoricalSessions];
+    double[] vecROC = new double[2];
 
-    void runRSI(String isin) {
+    void runROC(String isin) {
         Timer timer = new Timer();
         timer.schedule(new TimerRun(), 0, seconds * 1000);
     }
@@ -39,45 +40,28 @@ public class RSI {
                 vecQuotation[12] = 377.3;
                 vecQuotation[13] = 371.3;
 
-                double increases = 0.0;
-                double decreases = 0.0;
-                double RS = 0.0;
-                double RSIValue = 0.0;
-                int countIncreases = 0;
-                int countDecreases = 0;
+                double ROCValue = 0.0;
+                double ROCRest = 1.0;
 
                 for (int i = 0; i < numberOfHistoricalSessions - 1; i++) {
-                    if (vecQuotation[i] > vecQuotation[i + 1]) {
-                        increases += vecQuotation[i] - vecQuotation[i + 1];
-                        countIncreases++;
-                    }
-
-                    if (vecQuotation[i] < vecQuotation[i + 1]) {
-                        decreases -= vecQuotation[i] - vecQuotation[i + 1];
-                        countDecreases++;
-                    }
+                    ROCRest *= vecQuotation[i];
                 }
 
-//                now increases and decreases is average of it
-                if (countIncreases > 0) {
-                    increases = increases / countIncreases;
+                ROCValue = vecQuotation[0] - ROCRest;
+
+
+
+                for (int i = 2 - 1; i > 0; i--) {
+                    vecROC[i] = vecROC[i - 1];
                 }
 
-                if (countIncreases > 0) {
-                    decreases = decreases / countDecreases;
-                }
+                vecROC[0] = ROCValue;
 
-                if (decreases > 0) {
-                    RS = increases/decreases;
-                }
+                if (vecROC[0] > 0 && vecROC[1] < 0) decision = 1;
+                if (vecROC[0] < 0 && vecROC[1] > 0) decision = -1;
 
-                RSIValue = 100 - (100 / (1 + RS));
+                System.out.println("ROC: " + ROCValue);
 
-                System.out.println("RSI: " + RSIValue);
-
-                decision = 0;
-                if (RSIValue >= 70) decision = -1;
-                if (RSIValue <= 30) decision = 1;
             } catch (Exception err) {
                 System.out.println(err);
             }

@@ -10,8 +10,6 @@ public class ReadData {
 
             double selling = Double.parseDouble(decryptedHTML.select("td").get(4).ownText().replace(",", ".").replace(" ", ""));
 
-            System.out.println("\nconnected \n\n");
-
             return selling;
         }
         catch (IOException e) {
